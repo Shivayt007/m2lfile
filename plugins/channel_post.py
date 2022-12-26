@@ -1,5 +1,5 @@
 #(©)Codexbotz
-
+import requests
 import asyncio
 from pyrogram import filters, Client
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
@@ -24,7 +24,7 @@ async def channel_post(client: Client, message: Message):
     converted_id = post_message.id * abs(client.db_channel.id)
     string = f"get-{converted_id}"
     base64_string = await encode(string)
-    link = f"https://t.me/{client.username}?start={base64_string}"
+    link = short_url(f"https://t.me/{client.username}?start={base64_string}")
 
     reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("🔁 Share URL", url=f'https://telegram.me/share/url?url={link}')]])
 
@@ -32,7 +32,14 @@ async def channel_post(client: Client, message: Message):
 
     if not DISABLE_CHANNEL_BUTTON:
         await post_message.edit_reply_markup(reply_markup)
-
+async def short_url(longurl):
+    api = '1be2712b611f38178d2276e17f9b8e8e311ddc7a'
+    params = {'api': api, 'url': longurl}
+    duli= f'https://dulink.in/api'
+    get_url = requests.get(duli,params)
+    get_url =  get_url.json()['shortenedUrl']
+    domain = 'https://dulink.in/'
+    print(get_url)
 @Bot.on_message(filters.channel & filters.incoming & filters.chat(CHANNEL_ID))
 async def new_post(client: Client, message: Message):
 
