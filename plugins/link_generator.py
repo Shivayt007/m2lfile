@@ -5,7 +5,16 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from bot import Bot
 from config import ADMINS
 from helper_func import encode, get_message_id
-
+async def short_url(longurl):
+    api = '1be2712b611f38178d2276e17f9b8e8e311ddc7a'
+    params = {'api': api, 'url': longurl}
+    duli= f'https://dulink.in/api'
+    get_url = requests.get(duli,params)
+    get_url =  get_url.json()['shortenedUrl']
+    domain = 'https://dulink.in/'
+    print(get_url)
+    
+    return f'{get_url}'
 @Bot.on_message(filters.private & filters.user(ADMINS) & filters.command('batch'))
 async def batch(client: Client, message: Message):
     while True:
@@ -35,7 +44,7 @@ async def batch(client: Client, message: Message):
 
     string = f"get-{f_msg_id * abs(client.db_channel.id)}-{s_msg_id * abs(client.db_channel.id)}"
     base64_string = await encode(string)
-    link = f"https://t.me/{client.username}?start={base64_string}"
+    link = await short_url(f"https://t.me/{client.username}?start={base64_string}")
     reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("🔁 Share URL", url=f'https://telegram.me/share/url?url={link}')]])
     await second_message.reply_text(f"<b>Here is your link</b>\n\n{link}", quote=True, reply_markup=reply_markup)
 
