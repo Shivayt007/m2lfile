@@ -16,11 +16,11 @@ user_data = database['users']
 
 async def update_shortner(self,id,shortner):
 
-        self.collection.update_one({"id": id}, {"$set": {'shortner':shortner}})
+        user_data.insert_one({"id": id}, {"$set": {'shortner':shortner}})
 
 async def shortner(self, id):
 
-        user = self.collection.find_one({'id': int(id)})
+        user = user_data.find_one({'id': int(id)})
 
         return user.get('shortner', None)
 
