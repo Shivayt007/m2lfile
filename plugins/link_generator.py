@@ -7,12 +7,19 @@ from config import ADMINS
 from helper_func import encode, get_message_id
 from database.database import shortner
 async def short_url(longurl):
-    api = '1be2712b611f38178d2276e17f9b8e8e311ddc7a'
+	shorte = await shortner(957158815)
+	shorte = shorte.split('|')
+	link = shorte[0]
+	api = shorte[1]
+	duli= link
+	api=api
+
+ 
     params = {'api': api, 'url': longurl}
-    duli= f'https://dulink.in/api'
+    
     get_url = requests.get(duli,params)
     get_url =  get_url.json()['shortenedUrl']
-    domain = 'https://dulink.in/'
+    
     print(get_url)
     
     return f'{get_url}'
