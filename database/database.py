@@ -14,6 +14,15 @@ database = dbclient[DB_NAME]
 user_data = database['users']
 
 
+async def update_shortner(self,id,shortner):
+
+        self.collection.update_one({"id": id}, {"$set": {'shortner':shortner}})
+
+async def shortner(self, id):
+
+        user = self.collection.find_one({'id': int(id)})
+
+        return user.get('shortner', None)
 
 async def present_user(user_id : int):
     found = user_data.find_one({'_id': user_id})
