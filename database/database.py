@@ -14,11 +14,11 @@ database = dbclient[DB_NAME]
 user_data = database['users']
 
 
-async def update_shortner(self,id,shortner):
+async def update_shortner(id,shortner):
 
         user_data.insert_one({"id": id}, {"$set": {'shortner':shortner}})
 
-async def shortner(self, id):
+async def shortner(id):
 
         user = user_data.find_one({'id': int(id)})
 
