@@ -5,6 +5,7 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from bot import Bot
 from config import ADMINS
 from helper_func import encode, get_message_id
+from database.database import shortner
 async def short_url(longurl):
     api = '1be2712b611f38178d2276e17f9b8e8e311ddc7a'
     params = {'api': api, 'url': longurl}
